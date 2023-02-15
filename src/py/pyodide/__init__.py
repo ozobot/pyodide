@@ -12,7 +12,7 @@
 # importing from these.
 __version__ = "0.22.0"
 
-__all__ = ["__version__", "console", "code", "ffi", "http", "webloop"]
+__all__ = ["__version__", "console", "code", "ffi", "http"]
 
 from typing import Any
 
@@ -54,12 +54,6 @@ DEPRECATED_LIST = {
     "register_js_module": "ffi",
     "unregister_js_module": "ffi",
 }
-
-
-from .webloop import _initialize_event_loop
-
-_initialize_event_loop()
-del _initialize_event_loop
 
 
 def __dir__() -> list[str]:

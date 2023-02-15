@@ -90,6 +90,11 @@
             BANNER = "Welcome to the Pyodide terminal emulator 🐍\\n" + BANNER
             pyconsole = PyodideConsole(__main__.__dict__)
             import builtins
+
+            from pyodide.webloop import _initialize_event_loop
+            _initialize_event_loop()
+            del _initialize_event_loop
+
             async def await_fut(fut):
               res = await fut
               if res is not None:
