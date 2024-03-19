@@ -3,6 +3,7 @@ name: main
 on:
   push:
   pull_request:
+  workflow_call:
 
 # We do not allow one workflow to cancel the other
 #concurrency:
@@ -137,6 +138,20 @@ jobs:
 
           pip install brotli
           ./tools/check_compressed_size.py dist/pyodide.asm.* dist/python_stdlib*
+
+      - name: Fixup package.json files to include built packages
+        working-directory: ./dist
+        run: |
+          WHLFILES=$(mktemp)
+          NEWPACKAGEJSON=$(mktemp)
+          
+          # list all package files in $WHLFILES as json
+          ls *.whl *.whl.metadata *.zip | jq -Rn '[inputs]' > $WHLFILES
+
+          # append all wheels to .files of package.json
+          jq -s '.[0].files += .[1] | .[0]' package.json $WHLFILES > $NEWPACKAGEJSON
+
+          mv $NEWPACKAGEJSON package.json
 
       - name: Store artifacts build
         uses: actions/upload-artifact@v3
