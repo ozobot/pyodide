@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest] # we drop builds for macos-latest, as this prolongs the build and with scipy/jedi the build fails anyway
     runs-on: ${{ matrix.os }}
     env:
       EMSDK_NUM_CORES: 3
