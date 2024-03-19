@@ -4,9 +4,10 @@ on:
   push:
   pull_request:
 
-concurrency:
-  group: main-${{ github.head_ref }}
-  cancel-in-progress: true
+# We do not allow one workflow to cancel the other
+#concurrency:
+#  group: main-${{ github.head_ref }}
+#  cancel-in-progress: true
 
 env:
   FORCE_COLOR: 3
