@@ -1,3 +1,24 @@
+## About this fork
+
+Ozobot forked the [pyodide](https://github.com/pyodide/pyodide) repository to allow customized builds of the [pyodide npm package](https://www.npmjs.com/package/pyodide).
+
+The customization only happens in the CI configuration and in the pyodide's [package.json](./src/js/package.json) file.
+
+- Pyodide's [package.json](./src/js/package.json) was updated to reference correctly the @ozobot namespace and fork.
+- Additional step that automatically patches the pyodide's `package.json` to contain all the files that are part of the build was added. In the [upstream pyodide repo](https://github.com/pyodide/pyodide), the content of the `package.json` file is hardcoded and the `files` section doesn't reflect what modules were actually built. Therefore, we needed to do adjustments in our fork, see the step *Fixup package.json files to include built packages* in the main workflow file.
+- Action that builds and deploys the pyodide npm package on tag push. The tag has to be prefixed `ozobot/` for the workflow to run.
+
+The change to pyodide upstream (`main` branch) are maintained in the `master` branch of this repo. This is the suggested flow to build updated version of `pyodide`:
+
+1. Pull the branches and tags from upstream repo: `git fetch --tags https://github.com/pyodide/pyodide`
+2. Rebase the `master` branch on the particular pyodide version to be built: `git rebase --onto 0.25.1 0.24.1 master` (replace `0.25.1` with the pyodide version you want to deploy - preferably a release version - replace `0.24.1` the version `master` branch is currently based on)
+3. Resolve conflicts during rebase (if any).
+4. Force-push the `master` branch (`git push --force origin master`), the CI will build the version with the Ozobot specific patches applied.
+5. If the build passes OK, tag the current version, prefix it with `ozobot/`: `git tag --annotate --sign ozobot/0.25.1`
+6. Push the tag to deploy the version to [Ozobot's Github npm registry](https://github.com/ozobot/pyodide/pkgs/npm/pyodide): `git push origin ozobot/0.25.1`
+7. Bump the version of the `pyodide` npm package in projects that use it: `web$ npm install --save @ozobot/pyodide@latest`
+
+
 <div align="center">
   <a href="https://github.com/pyodide/pyodide">
   <img src="./docs/_static/img/pyodide-logo-readme.png" alt="Pyodide">
