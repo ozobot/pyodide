@@ -1,15 +1,15 @@
 {
-  "name": "pyodide",
+  "name": "@ozobot/pyodide",
   "version": "0.27.3",
   "description": "The Pyodide JavaScript package",
   "keywords": [
     "python",
     "webassembly"
   ],
-  "homepage": "https://github.com/pyodide/pyodide",
+  "homepage": "https://github.com/ozobot/pyodide",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pyodide/pyodide"
+    "url": "https://github.com/ozobot/pyodide"
   },
   "bugs": {
     "url": "https://github.com/pyodide/pyodide/issues"
@@ -133,5 +133,8 @@
   "types": "./pyodide.d.ts",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
