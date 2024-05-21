@@ -15,9 +15,9 @@ The change to pyodide upstream (`main` branch) are maintained in the `master` br
 2. Rebase the `master` branch on the particular pyodide version to be built: `git rebase --onto 0.25.1 0.24.1 master` (replace `0.25.1` with the pyodide version you want to deploy - preferably a release version - replace `0.24.1` the version `master` branch is currently based on)
 3. Resolve conflicts during rebase (if any).
 4. Force-push the `master` branch (`git push --force origin master`), the CI will build the version with the Ozobot specific patches applied.
-5. If the build passes OK, tag the current version, prefix it with `ozobot/`: `git tag --annotate --sign ozobot/0.24.1`
-6. Push the tag to deploy the version to [Ozobot's Github npm registry](https://github.com/ozobot/pyodide/pkgs/npm/pyodide): `git push origin ozobot/0.24.1`
-7. Bump the version of the `pyodide` npm package in projects that use it: `web$ npm update --save @ozobot/pyodide`
+5. If the build passes OK, tag the current version, prefix it with `ozobot/`: `git tag --annotate --sign ozobot/0.25.1`
+6. Push the tag to deploy the version to [Ozobot's Github npm registry](https://github.com/ozobot/pyodide/pkgs/npm/pyodide): `git push origin ozobot/0.25.1`
+7. Bump the version of the `pyodide` npm package in projects that use it: `web$ npm install --save @ozobot/pyodide@latest`
 
 
 <div align="center">
