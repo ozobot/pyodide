@@ -7,6 +7,7 @@ The customization only happens in the CI configuration and in the pyodide's [pac
 - Pyodide's [package.json](./src/js/package.json) was updated to reference correctly the @ozobot namespace and fork.
 - Additional step that automatically patches the pyodide's `package.json` to contain all the files that are part of the build was added. In the [upstream pyodide repo](https://github.com/pyodide/pyodide), the content of the `package.json` file is hardcoded and the `files` section doesn't reflect what modules were actually built. Therefore, we needed to do adjustments in our fork, see the step *Fixup package.json files to include built packages* in the main workflow file.
 - Action that builds and deploys the pyodide npm package on tag push. The tag has to be prefixed `ozobot/` for the workflow to run.
+- The macOS CI jobs (the `macos-15` build and the Safari tests) are temporarily disabled - they are broken upstream and we only publish the Linux build.
 
 The change to pyodide upstream (`main` branch) are maintained in the `master` branch of this repo. This is the suggested flow to build updated version of `pyodide`:
 

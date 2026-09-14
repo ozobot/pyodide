@@ -108,8 +108,12 @@ jobs:
         include:
           - os: ubuntu-latest
             pyodide_packages: "tag:core,tag:pyodide.test,numpy${{ needs.test-scipy-trigger.outputs.test-scipy == 'true' && ',scipy' || '' }}"
-          - os: macos-15
-            pyodide_packages: "tag:core,tag:pyodide.test,numpy"
+          # Disabled in this fork: upstream's stable branch builds emsdk with
+          # `touch -m -d '1 Jan 2021 12:00'`, which BSD touch rejects (fixed on
+          # upstream main only, in 0a813812 / #6359, never backported to stable).
+          # We publish only the Linux artifact, so we skip the macOS build.
+          # - os: macos-15
+          #   pyodide_packages: "tag:core,tag:pyodide.test,numpy"
     runs-on: ${{ matrix.os }}
     needs: [test-scipy-trigger]
     permissions:
@@ -259,6 +263,9 @@ jobs:
 
   test-core:
     name: Test core (${{ matrix.browser }})
+    # Disabled in this fork: Safari-on-macOS only, and it consumes the
+    # core-build-macOS artifact we no longer produce.
+    if: ${{ false }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     permissions:
